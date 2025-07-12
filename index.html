@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lumen Studios | Roblox Game Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@7/font/simple-icons.min.css">
+
+<style>
+:root{
+  --bg:#000;--txt:#fff;--muted:#bbb;
+  --strip:#151515;--strip-hover:#1f1f1f;
+  --radius:10px;--thumb-radius:6px;--tr:.25s
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* Header */
+header{max-width:1200px;margin:auto;padding:1rem 2rem;display:flex;align-items:center;gap:.6rem;font-size:1.6rem;font-weight:600}
+header img{height:30px;width:auto}
+
+/* Hero */
+.hero{text-align:center;padding:3rem 1rem 4rem}
+.hero h1{font-size:clamp(2.2rem,5vw,3.3rem);margin-bottom:1rem}
+.hero p{max-width:650px;margin:auto;color:var(--muted)}
+
+/* Socials */
+.socials-wrapper{margin-top:2.3rem}
+.socials-wrapper small{display:block;margin-bottom:.7rem;color:var(--muted);letter-spacing:.5px}
+.socials{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+.socials a{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.2rem;background:#111;font-weight:600;
+           border-radius:var(--radius);transition:transform var(--tr),box-shadow var(--tr)}
+.socials a:hover{transform:translateY(-3px);box-shadow:0 4px 12px rgba(255,255,255,.15)}
+.socials i{font-size:1.15rem}
+
+/* Games container */
+.games{max-width:1100px;margin:0 auto 4rem;padding:0 1rem}
+.games small{display:block;text-align:center;margin-bottom:.8rem;color:var(--muted);letter-spacing:.5px}
+
+/* Strip-style card ------------------------------------------ */
+.card{display:flex;gap:1.5rem;background:var(--strip);padding:1.5rem;
+      transition:background var(--tr),transform var(--tr)}
+.card:hover{background:var(--strip-hover);transform:scale(1.02)}
+.card img{width:180px;height:100px;object-fit:cover;border-radius:var(--thumb-radius)}
+.info{flex:1}
+.info h3{font-size:1.25rem;margin-bottom:.3rem}
+.stats{margin:.6rem 0;font-size:.9rem;color:var(--muted);display:flex;gap:1.3rem}
+.stats span{display:flex;align-items:center;gap:.3rem}
+.card+ .card{border-top:1px solid #222}
+
+/* Rounded only on outer most container edges */
+#game-list .card:first-child{border-top-left-radius:var(--radius);border-top-right-radius:var(--radius)}
+#game-list .card:last-child{border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius)}
+
+@media(min-width:768px){.card img{width:260px;height:140px}}
+/* Footer */
+footer{text-align:center;padding:2.5rem 1rem 3rem;font-size:.85rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><img src="light.svg" alt="Lumen Studios logo">Lumen Studios</header>
+
+<section class="hero">
+  <h1>Our Games</h1>
+  <p>Lumen Studios is a Roblox game studio whose goal is to make fun and engaging games for all ages and genders to play.</p>
+
+  <div class="socials-wrapper">
+    <small>Social Links</small>
+    <div class="socials">
+      <a href="https://www.roblox.com/communities/75579778/lumen-studios" target="_blank"><i class="si si-roblox"></i>Community</a>
+      <a href="https://discord.gg/SP7RHyesSj" target="_blank"><i class="si si-discord"></i>Discord</a>
+      <a href="https://x.com/LumenRoblox" target="_blank"><i class="si si-twitter"></i>Twitter</a>
+      <a href="https://www.youtube.com/@LumenRBLX" target="_blank"><i class="si si-youtube"></i>YouTube</a>
+    </div>
+  </div>
+</section>
+
+<section class="games">
+  <small>Games</small>
+  <div id="game-list"></div>
+</section>
+
+<footer>© <span id="yr"></span> Lumen Studios. All rights reserved.</footer>
+
+<script>
+/*   ──────────────────────────────
+     1) ADD / REMOVE GAMES HERE 🔽
+     ──────────────────────────────
+   • url  : full Roblox place URL (leave "" for a placeholder strip)
+   • desc : short description (optional)
+*/
+const games = [
+  { url:"", desc:"Description coming soon." },                    // placeholder
+  { url:"https://www.roblox.com/games/126884695634066/Grow-a-Garden",
+    desc:"Grow a Garden – description placeholder." }
+];
+
+/*   ✨ no edits needed below  ✨  */
+document.getElementById('yr').textContent = new Date().getFullYear();
+const list = document.getElementById('game-list');
+const idFrom = u => (u.match(/(\d{5,})/)||[])[1];
+
+games.forEach(g=>{
+  const isLink = g.url && g.url.trim();
+  const el = document.createElement(isLink ? 'a' : 'div');
+  el.className='card';
+  if(isLink){ el.href=g.url; el.target='_blank'; el.rel='noopener'; }
+
+  el.innerHTML=`
+     <img src="https://placehold.co/260x140/000000/ffffff?text=Coming+Soon" alt="">
+     <div class="info">
+        <h3 class="auto-title">${isLink?'Loading…':'Untitled Project'}</h3>
+        <p>${g.desc||'Description coming soon.'}</p>
+        <div class="stats">
+          <span><i class="si si-roblox"></i><b class="playing">—</b> playing</span>
+          <span>👁️ <b class="visits">—</b> visits</span>
+        </div>
+     </div>`;
+  list.appendChild(el);
+
+  if(!isLink) return;                     // placeholder → stop here
+  const place=idFrom(g.url);
+
+  (async()=>{
+    try{
+      // universe id
+      const uid = await fetch(`https://apis.roproxy.com/universes/v1/places/${place}/universe`)
+                         .then(r=>r.json()).then(d=>d.universeId);
+
+      // icon
+      const img = el.querySelector('img');
+      fetch(`https://thumbnails.roproxy.com/v1/games/icons?universeIds=${uid}&size=512x512&format=Png`)
+        .then(r=>r.json())
+        .then(d=>img.src = d?.data?.[0]?.imageUrl || img.src);
+
+      // stats & title
+      fetch(`https://games.roproxy.com/v1/games?universeIds=${uid}`)
+        .then(r=>r.json())
+        .then(d=>{
+          const game=d.data[0];
+          if(!game) return;
+          el.querySelector('.auto-title').textContent=game.name;
+          el.querySelector('.playing').textContent=game.playing.toLocaleString();
+          el.querySelector('.visits').textContent =game.visits.toLocaleString();
+        });
+    }catch(e){}
+  })();
+});
+</script>
+</body>
+</html>
